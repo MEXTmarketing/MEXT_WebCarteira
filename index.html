@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="Carteira WEB — documentos criptografados, offline e armazenados localmente no dispositivo.">
+  <meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; frame-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; style-src 'self'; script-src 'self'">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Carteira WEB</title>
+</head>
+<body>
+  <div class="bg-orb bg-orb-a" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-b" aria-hidden="true"></div>
+
+  <header class="app-header shell">
+    <a class="brand" href="./" aria-label="Carteira WEB">
+      <img src="./icon-192.png" alt="" width="42" height="42">
+      <span>
+        <strong>Carteira WEB</strong>
+        <small>Seus documentos. Só no seu dispositivo.</small>
+      </span>
+    </a>
+    <div class="header-actions">
+      <span id="networkBadge" class="status-pill" aria-live="polite">Verificando conexão…</span>
+      <button id="installBtn" class="btn btn-ghost btn-compact hidden" type="button">Instalar app</button>
+    </div>
+  </header>
+
+  <main class="shell app-main">
+    <section class="hero-panel" aria-labelledby="pageTitle">
+      <div class="hero-copy">
+        <span class="eyebrow">CARTEIRA DIGITAL LOCAL</span>
+        <h1 id="pageTitle">Documentos importantes, disponíveis até sem internet.</h1>
+        <p>Os arquivos ficam criptografados no navegador. Faça backup regularmente para ter uma cópia fora dele.</p>
+        <div class="hero-actions">
+          <button id="addBtn" class="btn btn-primary" type="button">
+            <span aria-hidden="true">＋</span> Adicionar documento
+          </button>
+          <button id="backupBtn" class="btn btn-secondary" type="button">Criar backup</button>
+        </div>
+      </div>
+
+      <div class="health-card" aria-label="Saúde do armazenamento">
+        <div class="health-head">
+          <div>
+            <span class="eyebrow">PROTEÇÃO LOCAL</span>
+            <strong id="storageProtectionTitle">Verificando…</strong>
+          </div>
+          <span id="protectionDot" class="health-dot" aria-hidden="true"></span>
+        </div>
+        <p id="storageProtectionText">Checando se o navegador preservará estes dados sob pressão de espaço.</p>
+        <button id="persistBtn" class="text-button" type="button">Solicitar armazenamento persistente</button>
+      </div>
+    </section>
+
+    <section class="stats-grid" aria-label="Resumo">
+      <article class="stat-card">
+        <span>Documentos</span>
+        <strong id="docsCount">0</strong>
+        <small id="legacyCount">Nenhum legado pendente</small>
+      </article>
+      <article class="stat-card">
+        <span>Espaço usado pelo site</span>
+        <strong id="storageUsed">—</strong>
+        <small id="storageQuota">Calculando limite…</small>
+      </article>
+      <article class="stat-card">
+        <span>Último backup</span>
+        <strong id="lastBackup">Nunca</strong>
+        <small id="backupAdvice">Recomendamos uma cópia periódica</small>
+      </article>
+    </section>
+
+    <section class="library-panel" aria-labelledby="libraryTitle">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">MINHA CARTEIRA</span>
+          <h2 id="libraryTitle">Documentos salvos</h2>
+        </div>
+        <div class="section-actions">
+          <button id="restoreBtn" class="btn btn-ghost btn-compact" type="button">Restaurar backup</button>
+          <button id="migrateLegacyBtn" class="btn btn-ghost btn-compact" type="button" title="Procura novamente documentos no banco da versão antiga">Verificar versão antiga</button>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <label class="search-box" for="searchInput">
+          <span aria-hidden="true">⌕</span>
+          <input id="searchInput" type="search" autocomplete="off" placeholder="Buscar por nome…">
+        </label>
+        <label class="select-wrap">
+          <span class="sr-only">Ordenação</span>
+          <select id="sortSelect">
+            <option value="updated-desc">Mais recentes</option>
+            <option value="updated-asc">Mais antigos</option>
+            <option value="title-asc">Nome A–Z</option>
+            <option value="title-desc">Nome Z–A</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="docsGrid" class="docs-grid" aria-live="polite"></div>
+
+      <div id="emptyState" class="empty-state hidden">
+        <div class="empty-icon" aria-hidden="true">▤</div>
+        <h3>Nenhum documento por aqui</h3>
+        <p id="emptyText">Adicione seu primeiro documento para começar.</p>
+        <button id="emptyAddBtn" class="btn btn-primary" type="button">Adicionar documento</button>
+      </div>
+    </section>
+
+    <section class="security-note">
+      <div class="security-icon" aria-hidden="true">◆</div>
+      <div>
+        <strong>Privacidade por padrão</strong>
+        <p>Nada é enviado para um servidor por esta aplicação. Senhas não são salvas. Ainda assim, armazenamento do navegador não substitui backup.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell app-footer">
+    <span>Carteira WEB V4</span>
+    <span>Offline-first • AES-GCM • IndexedDB</span>
+  </footer>
+
+  <dialog id="addDialog" class="modal">
+    <form id="addForm" class="modal-card" method="dialog" novalidate>
+      <div class="modal-head">
+        <div>
+          <span class="eyebrow">NOVO DOCUMENTO</span>
+          <h2>Adicionar à carteira</h2>
+        </div>
+        <button class="icon-button" data-close-dialog="addDialog" type="button" aria-label="Fechar">×</button>
+      </div>
+
+      <label class="field">
+        <span>Nome do documento</span>
+        <input id="titleInput" name="title" type="text" maxlength="80" autocomplete="off" placeholder="Ex.: CNH, RG, Carteirinha" required>
+      </label>
+
+      <label class="field">
+        <span>Senha do documento</span>
+        <div class="password-field">
+          <input id="passwordInput" name="password" type="password" minlength="6" autocomplete="new-password" placeholder="Use uma senha forte" required>
+          <button class="password-toggle" type="button" data-toggle-password="passwordInput" aria-label="Mostrar ou ocultar senha">Mostrar</button>
+        </div>
+        <small>Essa senha não é armazenada. Sem ela, o arquivo não pode ser descriptografado.</small>
+      </label>
+
+      <label class="file-drop" id="fileDrop" for="fileInput">
+        <input id="fileInput" type="file" accept="image/*,application/pdf" required>
+        <span class="file-drop-icon" aria-hidden="true">⇧</span>
+        <strong>Escolha uma imagem ou PDF</strong>
+        <small id="fileLabel">Até 25 MB. O arquivo será criptografado antes de ser salvo.</small>
+      </label>
+
+      <div class="modal-actions">
+        <button class="btn btn-ghost" data-close-dialog="addDialog" type="button">Cancelar</button>
+        <button id="saveDocBtn" class="btn btn-primary" type="submit">Criptografar e salvar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="viewerDialog" class="modal modal-wide">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <span id="viewerBadge" class="eyebrow">DOCUMENTO</span>
+          <h2 id="viewerTitle">Documento</h2>
+        </div>
+        <button id="closeViewerBtn" class="icon-button" type="button" aria-label="Fechar">×</button>
+      </div>
+
+      <div id="unlockStage" class="unlock-stage">
+        <div class="lock-illustration" aria-hidden="true">◇</div>
+        <p>Digite a senha usada neste documento. A descriptografia acontece somente neste dispositivo.</p>
+        <label class="field">
+          <span>Senha</span>
+          <div class="password-field">
+            <input id="unlockPassword" type="password" autocomplete="current-password" placeholder="Senha do documento">
+            <button class="password-toggle" type="button" data-toggle-password="unlockPassword">Mostrar</button>
+          </div>
+        </label>
+        <button id="unlockBtn" class="btn btn-primary" type="button">Abrir documento</button>
+        <small id="legacyUpgradeNote" class="legacy-note hidden">Este item veio da versão antiga. Ao abrir corretamente, ele será atualizado automaticamente para AES-GCM.</small>
+      </div>
+
+      <div id="previewStage" class="preview-stage hidden">
+        <div id="previewContainer" class="preview-container"></div>
+        <div class="preview-actions">
+          <button id="downloadBtn" class="btn btn-secondary" type="button">Baixar arquivo descriptografado</button>
+          <button id="hidePreviewBtn" class="btn btn-ghost" type="button">Bloquear novamente</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="renameDialog" class="modal">
+    <form id="renameForm" class="modal-card" method="dialog">
+      <div class="modal-head">
+        <div>
+          <span class="eyebrow">EDITAR</span>
+          <h2>Renomear documento</h2>
+        </div>
+        <button class="icon-button" data-close-dialog="renameDialog" type="button" aria-label="Fechar">×</button>
+      </div>
+      <label class="field">
+        <span>Novo nome</span>
+        <input id="renameInput" type="text" maxlength="80" required>
+      </label>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" data-close-dialog="renameDialog" type="button">Cancelar</button>
+        <button class="btn btn-primary" type="submit">Salvar nome</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="backupDialog" class="modal">
+    <form id="backupForm" class="modal-card" method="dialog">
+      <div class="modal-head">
+        <div>
+          <span class="eyebrow">BACKUP PROTEGIDO</span>
+          <h2>Criar cópia externa</h2>
+        </div>
+        <button class="icon-button" data-close-dialog="backupDialog" type="button" aria-label="Fechar">×</button>
+      </div>
+      <p class="modal-copy">O backup reunirá seus documentos em um arquivo <strong>.carteira</strong> protegido por uma senha própria.</p>
+      <label class="field">
+        <span>Senha do backup</span>
+        <div class="password-field">
+          <input id="backupPassword" type="password" minlength="8" autocomplete="new-password" placeholder="Mínimo de 8 caracteres" required>
+          <button class="password-toggle" type="button" data-toggle-password="backupPassword">Mostrar</button>
+        </div>
+      </label>
+      <label class="field">
+        <span>Confirmar senha</span>
+        <input id="backupPasswordConfirm" type="password" minlength="8" autocomplete="new-password" required>
+      </label>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" data-close-dialog="backupDialog" type="button">Cancelar</button>
+        <button id="createBackupBtn" class="btn btn-primary" type="submit">Gerar backup</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="restoreDialog" class="modal">
+    <form id="restoreForm" class="modal-card" method="dialog">
+      <div class="modal-head">
+        <div>
+          <span class="eyebrow">RESTAURAÇÃO</span>
+          <h2>Restaurar backup</h2>
+        </div>
+        <button class="icon-button" data-close-dialog="restoreDialog" type="button" aria-label="Fechar">×</button>
+      </div>
+      <label class="file-drop" for="restoreFileInput">
+        <input id="restoreFileInput" type="file" accept=".carteira,.json,application/json" required>
+        <span class="file-drop-icon" aria-hidden="true">↥</span>
+        <strong>Selecionar arquivo de backup</strong>
+        <small id="restoreFileLabel">Arquivos .carteira gerados por esta versão.</small>
+      </label>
+      <label class="field">
+        <span>Senha do backup</span>
+        <div class="password-field">
+          <input id="restorePassword" type="password" autocomplete="current-password" placeholder="Senha usada ao criar o backup">
+          <button class="password-toggle" type="button" data-toggle-password="restorePassword">Mostrar</button>
+        </div>
+      </label>
+      <label class="check-row">
+        <input id="replaceOnRestore" type="checkbox">
+        <span>Substituir a carteira atual antes de restaurar</span>
+      </label>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" data-close-dialog="restoreDialog" type="button">Cancelar</button>
+        <button id="restoreBackupBtn" class="btn btn-primary" type="submit">Restaurar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toastRegion" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+  <input id="legacyHiddenInput" type="hidden" aria-hidden="true">
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
