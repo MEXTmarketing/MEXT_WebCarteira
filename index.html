@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0b1020">
+  <meta name="theme-color" content="#f3f4f6">
   <meta name="description" content="Carteira WEB — documentos criptografados, offline e armazenados localmente no dispositivo.">
-  <meta name="color-scheme" content="dark">
+  <meta name="color-scheme" content="light">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; frame-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; style-src 'self'; script-src 'self'">
   <link rel="manifest" href="./manifest.json">
   <link rel="icon" href="./icon-192.png" sizes="192x192">
@@ -14,15 +14,12 @@
   <title>Carteira WEB</title>
 </head>
 <body>
-  <div class="bg-orb bg-orb-a" aria-hidden="true"></div>
-  <div class="bg-orb bg-orb-b" aria-hidden="true"></div>
-
   <header class="app-header shell">
     <a class="brand" href="./" aria-label="Carteira WEB">
       <img src="./icon-192.png" alt="" width="42" height="42">
       <span>
         <strong>Carteira WEB</strong>
-        <small>Seus documentos. Só no seu dispositivo.</small>
+        <small>Documentos locais e criptografados</small>
       </span>
     </a>
     <div class="header-actions">
@@ -34,9 +31,9 @@
   <main class="shell app-main">
     <section class="hero-panel" aria-labelledby="pageTitle">
       <div class="hero-copy">
-        <span class="eyebrow">CARTEIRA DIGITAL LOCAL</span>
-        <h1 id="pageTitle">Documentos importantes, disponíveis até sem internet.</h1>
-        <p>Os arquivos ficam criptografados no navegador. Faça backup regularmente para ter uma cópia fora dele.</p>
+        <span class="eyebrow">VISÃO GERAL</span>
+        <h1 id="pageTitle">Sua carteira de documentos</h1>
+        <p>Arquivos criptografados, armazenados localmente e disponíveis mesmo sem conexão.</p>
         <div class="hero-actions">
           <button id="addBtn" class="btn btn-primary" type="button">
             <span aria-hidden="true">＋</span> Adicionar documento
@@ -48,7 +45,7 @@
       <div class="health-card" aria-label="Saúde do armazenamento">
         <div class="health-head">
           <div>
-            <span class="eyebrow">PROTEÇÃO LOCAL</span>
+            <span class="eyebrow">ARMAZENAMENTO</span>
             <strong id="storageProtectionTitle">Verificando…</strong>
           </div>
           <span id="protectionDot" class="health-dot" aria-hidden="true"></span>
@@ -79,7 +76,7 @@
     <section class="library-panel" aria-labelledby="libraryTitle">
       <div class="section-head">
         <div>
-          <span class="eyebrow">MINHA CARTEIRA</span>
+          <span class="eyebrow">ARQUIVOS</span>
           <h2 id="libraryTitle">Documentos salvos</h2>
         </div>
         <div class="section-actions">
@@ -115,7 +112,7 @@
     </section>
 
     <section class="security-note">
-      <div class="security-icon" aria-hidden="true">◆</div>
+      <div class="security-icon" aria-hidden="true">i</div>
       <div>
         <strong>Privacidade por padrão</strong>
         <p>Nada é enviado para um servidor por esta aplicação. Senhas não são salvas. Ainda assim, armazenamento do navegador não substitui backup.</p>
@@ -124,8 +121,8 @@
   </main>
 
   <footer class="shell app-footer">
-    <span>Carteira WEB V4</span>
-    <span>Offline-first • AES-GCM • IndexedDB</span>
+    <span>Carteira WEB V4.1</span>
+    <span>AES-GCM · IndexedDB · funcionamento offline</span>
   </footer>
 
   <dialog id="addDialog" class="modal">

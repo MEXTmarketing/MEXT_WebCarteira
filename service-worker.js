@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'webcarteira-shell-';
-const CACHE_VERSION = 'v4.0.0';
+const CACHE_VERSION = 'v4.1.0';
 const CACHE_NAME = `${CACHE_PREFIX}${CACHE_VERSION}`;
 
 const APP_SHELL = [

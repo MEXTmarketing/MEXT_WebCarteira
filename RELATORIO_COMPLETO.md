@@ -1,5 +1,42 @@
 # Relatório completo — auditoria e reconstrução da Carteira WEB
 
+## Atualização V4.1 — revisão visual “codado à mão”
+
+Depois da reconstrução funcional da V4, a interface foi revisada novamente para remover características visuais associadas a templates genéricos, interfaces SaaS geradas por IA e “vibecoding”. Nenhuma alteração desta etapa muda o formato dos documentos salvos, o banco IndexedDB ou o mecanismo de criptografia.
+
+### Problemas visuais da primeira V4
+
+- Fundo escuro com iluminação radial e elementos decorativos desfocados.
+- Cores neon/azul-violeta e alto contraste que lembravam dashboards genéricos.
+- Botões com gradientes e sombras coloridas.
+- Cards muito arredondados e uso de transparência/glassmorphism.
+- Título principal grande demais para um utilitário, com aparência de landing page.
+- Muitos elementos com estética “premium SaaS” em vez de ferramenta pessoal.
+
+### Mudanças aplicadas na V4.1
+
+- Fundo neutro `#f3f4f6` e superfícies brancas.
+- Cor funcional principal azul sóbrio `#2459a6`; sem rosa, roxo neon ou degradês.
+- Tipografia nativa do sistema operacional para aparência natural e carregamento imediato.
+- Raios reduzidos para 5–10 px e bordas cinza convencionais.
+- Sombras limitadas a estados em que ajudam na hierarquia, sem glow.
+- Cabeçalho compacto com borda inferior, semelhante a aplicações web tradicionais.
+- Hero convertido em resumo funcional, com título menor e linguagem menos publicitária.
+- Área de documentos organizada como painel de trabalho.
+- Cards de documento mais secos, compactos e com ações diretas.
+- Modais brancos e objetivos, com campos e botões convencionais.
+- Indicadores de status discretos, sem efeitos luminosos.
+- Novo ícone do app com desenho simples de carteira em grafite/branco e pequeno detalhe azul.
+- `theme_color` e `background_color` do PWA alinhados ao novo visual claro.
+- Versão de cache atualizada para `webcarteira-shell-v4.1.0`, evitando que usuários permaneçam vendo o CSS antigo após a publicação.
+
+### O que foi preservado
+
+A camada de dados e segurança continua igual: IndexedDB com IDs únicos, AES-GCM/PBKDF2, migração de versões antigas, backup `.carteira`, restauração, modo offline, persistência, busca e suporte a PDF/imagem.
+
+---
+
+
 ## 1. Resumo executivo
 
 O projeto original tinha uma boa ideia de base: PWA, IndexedDB e funcionamento local/offline. O principal problema não era apenas “cache”. Havia uma combinação de riscos que podia fazer o usuário acreditar que documentos tinham desaparecido, permitir substituições silenciosas e deixar o armazenamento vulnerável à política de descarte do navegador.
@@ -389,7 +426,7 @@ A interface foi refeita com foco em mobile/PWA e uso rápido:
 
 ### Agora
 
-- cache versionado `webcarteira-shell-v4.0.0`;
+- cache versionado `webcarteira-shell-v4.1.0`;
 - somente arquivos do app shell entram na instalação;
 - navegação tenta rede e cai para `index.html` em cache;
 - assets usam cache com preenchimento após fetch;

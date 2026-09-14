@@ -1,6 +1,6 @@
 'use strict';
 
-const APP_VERSION = '4.0.0';
+const APP_VERSION = '4.1.0';
 const DB_NAME = 'CarteiraWebDB';
 const DB_VERSION = 1;
 const DOCS_STORE = 'documents';

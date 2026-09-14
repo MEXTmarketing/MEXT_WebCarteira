@@ -1,6 +1,21 @@
-# Carteira WEB V4
+# Carteira WEB V4.1
 
 Aplicação PWA offline-first para guardar documentos localmente no navegador com criptografia por documento, backup externo protegido e migração das versões antigas.
+
+
+## Atualização visual V4.1
+
+A V4.1 mantém a arquitetura e as funções da V4, mas troca completamente a linguagem visual. O objetivo foi evitar a aparência comum de interfaces geradas por IA ou “vibecoding”.
+
+- Removidos gradientes, brilhos, glassmorphism, blobs/orbs decorativos e sombras exageradas.
+- Paleta refeita em branco, cinza neutro, grafite e azul funcional discreto.
+- Tipografia baseada na fonte nativa do sistema, sem dependências externas.
+- Bordas e raios menores, próximos de ferramentas web tradicionais.
+- Hero reduzido: a aplicação agora abre como ferramenta, não como landing page promocional.
+- Cards e modais mais compactos e funcionais.
+- Botões sem gradiente e sem animações de “flutuar”.
+- Novo ícone do aplicativo, geométrico e monocromático.
+- Cache do service worker atualizado para `v4.1.0` para garantir a troca do CSS antigo.
 
 ## O que mudou
 
@@ -102,4 +117,15 @@ Navegador moderno com:
 
 A interface limita cada documento a 25 MB para evitar operações excessivamente pesadas em memória no navegador.
 
- 
+## Teste rápido recomendado depois do deploy
+
+1. Abrir a V4 no endereço normal do GitHub Pages.
+2. Conferir se documentos antigos aparecem.
+3. Abrir um documento antigo com senha correta e confirmar que o selo muda para AES-GCM.
+4. Adicionar dois documentos com o mesmo nome e confirmar que ambos permanecem.
+5. Recarregar a página e conferir se continuam listados.
+6. Instalar o PWA e testar modo offline.
+7. Criar um backup `.carteira`.
+8. Adicionar um documento de teste, restaurar o backup e confirmar a recuperação.
+9. Verificar o cartão “Proteção local” e solicitar armazenamento persistente se ainda não estiver ativo.
+
