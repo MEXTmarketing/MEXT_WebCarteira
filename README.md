@@ -117,15 +117,4 @@ Navegador moderno com:
 
 A interface limita cada documento a 25 MB para evitar operações excessivamente pesadas em memória no navegador.
 
-## Teste rápido recomendado depois do deploy
-
-1. Abrir a V4 no endereço normal do GitHub Pages.
-2. Conferir se documentos antigos aparecem.
-3. Abrir um documento antigo com senha correta e confirmar que o selo muda para AES-GCM.
-4. Adicionar dois documentos com o mesmo nome e confirmar que ambos permanecem.
-5. Recarregar a página e conferir se continuam listados.
-6. Instalar o PWA e testar modo offline.
-7. Criar um backup `.carteira`.
-8. Adicionar um documento de teste, restaurar o backup e confirmar a recuperação.
-9. Verificar o cartão “Proteção local” e solicitar armazenamento persistente se ainda não estiver ativo.
-
+ 
